@@ -6,6 +6,8 @@ bool afk = false;
 char time_value = -1;
 char weather_value = -1;
 
+#define PREFIX "{c43d5c}amazing++ "
+
 
 kthook::kthook_signal<prototype::init_game_instance_t> hook_game_instance { 0x745560 };
 
@@ -142,7 +144,7 @@ void c_plugin::update(const decltype(update_hook)& hook) {
     
     if (!inited && c_chat::get()->ref() != nullptr && rakhook::initialize()) {
 
-        c_chat::get()->ref()->add_message(-1, "{c43d5c}amazing++ by{ffffff} waparabka");
+        c_chat::get()->ref()->add_message(-1, PREFIX "by{ffffff} waparabka");
 
         c_input::get()->ref()->add_command("st", [](const char* p) {
 
@@ -150,7 +152,7 @@ void c_plugin::update(const decltype(update_hook)& hook) {
 
             if (h < 0) {
 
-                c_chat::get()->ref()->add_message(-1, "Возвращено серверное время");
+                c_chat::get()->ref()->add_message(-1, PREFIX "{ffffff}Возвращено серверное время");
 
                 time_value = -1;
 
@@ -159,7 +161,7 @@ void c_plugin::update(const decltype(update_hook)& hook) {
                 
             if (h > 24) {
 
-                c_chat::get()->ref()->add_message(-1, "Установить время можно от 0 и до 24 (-1 что бы вернуть серверное)");
+                c_chat::get()->ref()->add_message(-1, PREFIX "{ffffff}Установить время можно от 0 и до 24 (-1 что бы вернуть серверное)");
 
                 return;
             }
@@ -167,7 +169,7 @@ void c_plugin::update(const decltype(update_hook)& hook) {
             time_value = h;
             c_game::get()->ref()->set_world_time(time_value, 0);
             
-            c_chat::get()->ref()->add_message(-1, std::string("Установлено новое время: " + std::to_string(time_value)).c_str());
+            c_chat::get()->ref()->add_message(-1, std::string(PREFIX "{ffffff}Установлено новое время: " + std::to_string(time_value)).c_str());
         });
 
         c_input::get()->ref()->add_command("sw", [](const char* p) {
@@ -176,7 +178,7 @@ void c_plugin::update(const decltype(update_hook)& hook) {
 
             if (w < 0) {
 
-                c_chat::get()->ref()->add_message(-1, "Возвращена серверная погода");
+                c_chat::get()->ref()->add_message(-1, PREFIX "{ffffff}Возвращена серверная погода");
 
                 weather_value = -1;
 
@@ -185,7 +187,7 @@ void c_plugin::update(const decltype(update_hook)& hook) {
 
             if (w > 255) {
                 
-                c_chat::get()->ref()->add_message(-1, "Установить погоду можно от 0 и до 255 (-1 что бы вернуть серверное)");
+                c_chat::get()->ref()->add_message(-1, PREFIX "{ffffff}Установить погоду можно от 0 и до 255 (-1 что бы вернуть серверное)");
 
                 return;
             }
@@ -193,7 +195,7 @@ void c_plugin::update(const decltype(update_hook)& hook) {
             weather_value = w;
             c_game::get()->ref()->force_weather_now(weather_value);
 
-            c_chat::get()->ref()->add_message(-1, std::string("Установлена новая погода: " + std::to_string(weather_value)).c_str());
+            c_chat::get()->ref()->add_message(-1, std::string(PREFIX "{ffffff}Установлена новая погода: " + std::to_string(weather_value)).c_str());
         });
 
         c_input::get()->ref()->add_command("fd", [](const char* p) {
@@ -278,7 +280,16 @@ HRESULT c_plugin::wnd_proc_handler(const decltype(wnd_proc_hook)& hook, HWND hwn
                 delete bs;
             }
 
-            if (w_param == 0x36) {
+            if (w_param == 0x34) {
+
+                bool* vehlods = reinterpret_cast<bool*>(0x52C9EE);
+                
+                *vehlods ^= true;
+                
+                c_chat::get()->ref()->add_message(-1, std::string(PREFIX "{ffffff}Сжатие машин " + std::string((*vehlods ? "включено" : "выключено"))).c_str());
+            }
+            
+            if (w_param == 0x35) {
                 
                 afk ^= true;
 
@@ -305,3 +316,5 @@ c_plugin::~c_plugin() {
     
     rakhook::destroy();
 }
+
+#undef PREFIX
