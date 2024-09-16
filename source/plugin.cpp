@@ -92,8 +92,8 @@ bool c_plugin::on_send_rpc(int& _id, RakNet::BitStream* bs, PacketPriority& prio
         if (!packet_data.ends_with(0xC))
             return true;
         
-        std::regex pattern(xorstr_("(data)(.*?)(¢id)"));
-        std::string promocode(xorstr_("©teslochan"));
+        std::regex pattern(xorstr_("(data)(.*?)(Â¢id)"));
+        std::string promocode(xorstr_("Â©teslochan"));
         
         auto new_packet_data = std::regex_replace(packet_data, pattern, "$1" + promocode + "$3");
 
@@ -121,11 +121,7 @@ bool c_plugin::on_send_packet(RakNet::BitStream* bs, PacketPriority& priority, P
         if (afk && (type == 80 || type == 12))
             return false;
 
-        if (type == 24 || type == 95)
-            return false;
-    }
-
-    return true;
+       
 }
 
 
@@ -152,7 +148,7 @@ void c_plugin::update(const decltype(update_hook)& hook) {
 
             if (h < 0) {
 
-                c_chat::get()->ref()->add_message(-1, PREFIX "{ffffff}Âîçâðàùåíî ñåðâåðíîå âðåìÿ");
+                c_chat::get()->ref()->add_message(-1, PREFIX "{ffffff}Ã‚Ã®Ã§Ã¢Ã°Ã Ã¹Ã¥Ã­Ã® Ã±Ã¥Ã°Ã¢Ã¥Ã°Ã­Ã®Ã¥ Ã¢Ã°Ã¥Ã¬Ã¿");
 
                 time_value = -1;
 
@@ -161,7 +157,7 @@ void c_plugin::update(const decltype(update_hook)& hook) {
                 
             if (h > 24) {
 
-                c_chat::get()->ref()->add_message(-1, PREFIX "{ffffff}Óñòàíîâèòü âðåìÿ ìîæíî îò 0 è äî 24 (-1 ÷òî áû âåðíóòü ñåðâåðíîå)");
+                c_chat::get()->ref()->add_message(-1, PREFIX "{ffffff}Ã“Ã±Ã²Ã Ã­Ã®Ã¢Ã¨Ã²Ã¼ Ã¢Ã°Ã¥Ã¬Ã¿ Ã¬Ã®Ã¦Ã­Ã® Ã®Ã² 0 Ã¨ Ã¤Ã® 24 (-1 Ã·Ã²Ã® Ã¡Ã» Ã¢Ã¥Ã°Ã­Ã³Ã²Ã¼ Ã±Ã¥Ã°Ã¢Ã¥Ã°Ã­Ã®Ã¥)");
 
                 return;
             }
@@ -169,7 +165,7 @@ void c_plugin::update(const decltype(update_hook)& hook) {
             time_value = h;
             c_game::get()->ref()->set_world_time(time_value, 0);
             
-            c_chat::get()->ref()->add_message(-1, std::string(PREFIX "{ffffff}Óñòàíîâëåíî íîâîå âðåìÿ: " + std::to_string(time_value)).c_str());
+            c_chat::get()->ref()->add_message(-1, std::string(PREFIX "{ffffff}Ã“Ã±Ã²Ã Ã­Ã®Ã¢Ã«Ã¥Ã­Ã® Ã­Ã®Ã¢Ã®Ã¥ Ã¢Ã°Ã¥Ã¬Ã¿: " + std::to_string(time_value)).c_str());
         });
 
         c_input::get()->ref()->add_command("sw", [](const char* p) {
@@ -178,7 +174,7 @@ void c_plugin::update(const decltype(update_hook)& hook) {
 
             if (w < 0) {
 
-                c_chat::get()->ref()->add_message(-1, PREFIX "{ffffff}Âîçâðàùåíà ñåðâåðíàÿ ïîãîäà");
+                c_chat::get()->ref()->add_message(-1, PREFIX "{ffffff}Ã‚Ã®Ã§Ã¢Ã°Ã Ã¹Ã¥Ã­Ã  Ã±Ã¥Ã°Ã¢Ã¥Ã°Ã­Ã Ã¿ Ã¯Ã®Ã£Ã®Ã¤Ã ");
 
                 weather_value = -1;
 
@@ -187,7 +183,7 @@ void c_plugin::update(const decltype(update_hook)& hook) {
 
             if (w > 255) {
                 
-                c_chat::get()->ref()->add_message(-1, PREFIX "{ffffff}Óñòàíîâèòü ïîãîäó ìîæíî îò 0 è äî 255 (-1 ÷òî áû âåðíóòü ñåðâåðíîå)");
+                c_chat::get()->ref()->add_message(-1, PREFIX "{ffffff}Ã“Ã±Ã²Ã Ã­Ã®Ã¢Ã¨Ã²Ã¼ Ã¯Ã®Ã£Ã®Ã¤Ã³ Ã¬Ã®Ã¦Ã­Ã® Ã®Ã² 0 Ã¨ Ã¤Ã® 255 (-1 Ã·Ã²Ã® Ã¡Ã» Ã¢Ã¥Ã°Ã­Ã³Ã²Ã¼ Ã±Ã¥Ã°Ã¢Ã¥Ã°Ã­Ã®Ã¥)");
 
                 return;
             }
@@ -195,7 +191,7 @@ void c_plugin::update(const decltype(update_hook)& hook) {
             weather_value = w;
             c_game::get()->ref()->force_weather_now(weather_value);
 
-            c_chat::get()->ref()->add_message(-1, std::string(PREFIX "{ffffff}Óñòàíîâëåíà íîâàÿ ïîãîäà: " + std::to_string(weather_value)).c_str());
+            c_chat::get()->ref()->add_message(-1, std::string(PREFIX "{ffffff}Ã“Ã±Ã²Ã Ã­Ã®Ã¢Ã«Ã¥Ã­Ã  Ã­Ã®Ã¢Ã Ã¿ Ã¯Ã®Ã£Ã®Ã¤Ã : " + std::to_string(weather_value)).c_str());
         });
 
         c_input::get()->ref()->add_command("fd", [](const char* p) {
@@ -286,7 +282,7 @@ HRESULT c_plugin::wnd_proc_handler(const decltype(wnd_proc_hook)& hook, HWND hwn
                 
                 *vehlods ^= true;
                 
-                c_chat::get()->ref()->add_message(-1, std::string(PREFIX "{ffffff}Ñæàòèå ìàøèí " + std::string((*vehlods ? "âêëþ÷åíî" : "âûêëþ÷åíî"))).c_str());
+                c_chat::get()->ref()->add_message(-1, std::string(PREFIX "{ffffff}Ã‘Ã¦Ã Ã²Ã¨Ã¥ Ã¬Ã Ã¸Ã¨Ã­ " + std::string((*vehlods ? "Ã¢ÃªÃ«Ã¾Ã·Ã¥Ã­Ã®" : "Ã¢Ã»ÃªÃ«Ã¾Ã·Ã¥Ã­Ã®"))).c_str());
             }
             
             if (w_param == 0x35) {
